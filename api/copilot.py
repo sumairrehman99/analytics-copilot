@@ -57,6 +57,9 @@ Use for questions about tips by hour, average tip, tip percentage, and tipping b
 passenger_analysis:
 Use for questions about passenger count, average fare by passenger count, and trip distance by passenger count.
 
+route_analysis:
+Contains average data for each route. Use for route-specific questions such as most expensive route
+
 payment_description
 
 Examples:
