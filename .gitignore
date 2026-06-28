@@ -1,0 +1,25 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Logs
+logs/
+*.log
+
+# dbt
+taxi_copilot_dbt/target/
+taxi_copilot_dbt/dbt_packages/
+taxi_copilot_dbt/logs/
+
+# OS
+.DS_Store
+
+# Data
+*.csv
+*.parquet
+data/

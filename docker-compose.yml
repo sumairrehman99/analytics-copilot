@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: taxi-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: taxi_db
+    ports:
+      - "5544:5432"
+    volumes:
+      - taxi_postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:password@postgres:5432/taxi_db
+      OPENAI_KEY: ${OPENAI_KEY}
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  taxi_postgres_data:

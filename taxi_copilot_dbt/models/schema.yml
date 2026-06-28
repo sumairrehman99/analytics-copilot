@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: clean_taxi_trips
+    description: Cleaned taxi trip records with typed fields and derived time features.
+    columns:
+      - name: pickup_datetime
+        tests:
+          - not_null
+
+      - name: fare_amount
+        tests:
+          - not_null
+
+      - name: total_amount
+        tests:
+          - not_null
+
+      - name: trip_distance
+        tests:
+          - not_null
+
+  - name: hourly_demand
+    description: Trip volume and fare metrics grouped by pickup hour.
+    columns:
+      - name: pickup_hour
+        tests:
+          - not_null
+          - unique
+          
+  - name: weekday_analysis
+    description: Aggregated trip metrics by day of week.
+    columns:
+      - name: pickup_day_of_week
+        tests:
+          - not_null
+          - unique
+
+  - name: tip_analysis
+    description: Tip metrics by pickup hour.
+    columns:
+      - name: pickup_hour
+        tests:
+          - not_null
+          - unique
+
+  - name: passenger_analysis
+    description: Trip metrics grouped by passenger count.
+    columns:
+      - name: passenger_count
+        tests:
+          - not_null
+          - unique
+
+  - name: route_analysis
+    description: Trip metrics grouped by routes.
+    columns:
+      - name: route
+        tests:
+          - not_null
+          - unique
+  
