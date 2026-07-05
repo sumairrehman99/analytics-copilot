@@ -63,21 +63,6 @@ Analytics Copilot is an AI-powered analytics application that enables users to q
 
 ---
 
-## Project Structure
-
-```
-analytics-copilot/
-│
-├── app/
-├── taxi-copilot-dbt
-├── ingestion
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
-```
-
----
-
 ## How It Works
 
 1. Public datasets are ingested into PostgreSQL.
