@@ -80,7 +80,7 @@ Analytics Copilot is an AI-powered analytics application that enables users to q
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/analytics-copilot.git
+git clone https://github.com/sumairrehman99/analytics-copilot.git
 
 cd analytics-copilot
 ```
