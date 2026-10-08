@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-dotenv
+pandas
+snowflake-connector-python
+sqlalchemy
+snowflake-sqlalchemy
+
+openai
+langchain
+langchain-openai
+langchain-community
+
+streamlit
+plotly

@@ -1,0 +1,6 @@
+sources:
+  - name: raw
+    database: ANALYTICS_COPILOT
+    schema: RAW
+    tables:
+      - name: TAXI_TRIPS
