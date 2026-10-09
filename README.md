@@ -1,150 +1,136 @@
 # Analytics Copilot
 
-Analytics Copilot is an AI-powered analytics application that enables users to query structured data using natural language. The application converts English questions into SQL using an LLM, executes the generated queries against a PostgreSQL data warehouse, and returns both tabular results and visualizations through a web interface.
+Analytics Copilot is a natural-language analytics application built around NYC taxi trip data. It uses an LLM to turn questions into SQL, runs those queries against a Snowflake data warehouse, and returns results, summaries, and visualizations through a Streamlit interface.
 
----
+The project combines data ingestion, warehouse modeling with dbt, and an API that connects the data layer to the application.
 
 ## Features
 
-- Natural language to SQL
-- PostgreSQL analytics warehouse
-- ETL pipeline for public API data
-- dbt data transformations
-- FastAPI backend
-- Interactive Streamlit frontend
-- Dockerized application
-
----
+- Natural-language to SQL querying
+- Python ingestion pipeline for public NYC taxi data
+- Snowflake data warehouse with RAW, STAGING, and MARTS schemas
+- dbt transformations, analytical models, and data quality tests
+- FastAPI backend for query execution and result generation
+- Streamlit frontend for interactive analytics
+- Docker Compose setup for running the API and frontend together
 
 ## Architecture
 
 ```text
-           Public API
-                │
-                ▼
-          Python ETL Pipeline
-                │
-                ▼
-           PostgreSQL
-                │
-             dbt Models
-                │
-                ▼
-          Analytics Warehouse
-                │
-                ▼
-         FastAPI Backend
-                │
-         LLM SQL Generation
-                │
-                ▼
-        Execute SQL Queries
-                │
-                ▼
-      Results & Visualizations
-                │
-                ▼
+        NYC Taxi Public API
+                 |
+                 v
+         Python Ingestion
+                 |
+                 v
+          Snowflake RAW
+                 |
+                 v
+          dbt STAGING
+                 |
+                 v
+           dbt MARTS
+                 |
+                 v
+          FastAPI Backend
+                 |
+          LLM SQL Generation
+                 |
+                 v
+       Query Snowflake Models
+                 |
+                 v
+       Results, Summaries,
+        and Visualizations
+                 |
+                 v
         Streamlit Frontend
 ```
-
----
 
 ## Tech Stack
 
 | Component | Technology |
-|-----------|------------|
+|---|---|
 | Language | Python |
-| Database | PostgreSQL |
+| Data Warehouse | Snowflake |
+| Data Ingestion | Python |
 | Data Modeling | dbt |
 | Backend | FastAPI |
 | Frontend | Streamlit |
-| AI | OpenAI LLM |
-| Containerization | Docker |
+| Natural Language Processing | OpenAI API |
+| Containerization | Docker, Docker Compose |
 
----
+## Data Pipeline and Modeling
+
+The ingestion script loads public NYC taxi trip data into the RAW schema in Snowflake. dbt then cleans and transforms the data in the STAGING layer and builds analytical models in MARTS.
+
+The mart models support analysis of revenue, hourly demand, passenger counts, payment types, pickup hotspots, routes, and tipping patterns. dbt tests help validate the resulting datasets.
 
 ## How It Works
 
-1. Public datasets are ingested into PostgreSQL.
-2. dbt transforms raw data into analytics-ready models.
-3. Users ask questions in natural language.
-4. The LLM converts the question into SQL.
-5. SQL is executed against PostgreSQL.
-6. Results are summarized and visualized.
-7. Streamlit displays the response.
-
----
+1. Python retrieves public NYC taxi data and loads it into Snowflake.
+2. dbt transforms the raw records and builds analytical models.
+3. A user submits a question through Streamlit.
+4. The LLM generates SQL based on the available analytical schema.
+5. FastAPI executes the query against Snowflake.
+6. The application returns the results, a natural-language summary, and a recommended visualization.
 
 ## Running Locally
 
-Clone the repository
+### Prerequisites
+
+- Docker Desktop
+- A Snowflake account with access to the configured warehouse and schemas
+- An OpenAI API key
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/sumairrehman99/analytics-copilot.git
-
+git clone -b snowflake-migration https://github.com/sumairrehman99/analytics-copilot.git
 cd analytics-copilot
 ```
 
-Run
+### 2. Configure environment variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Add your Snowflake credentials and OpenAI API key to `.env`. Use the variable names provided in `.env.example`.
+
+Do not commit `.env` or share your credentials.
+
+### 3. Start the application
 
 ```bash
 docker compose up --build
 ```
 
-Frontend
+Open the application:
 
-```
-http://localhost:8501
-```
+- **Streamlit:** http://localhost:8501
+- **FastAPI docs:** http://localhost:8001/docs
 
-API Docs
-
-```
-http://localhost:8000/docs
-```
-
----
+Stop the containers with `Ctrl+C`. To run them in the background, use `docker compose up --build -d`.
 
 ## Example Questions
 
-- Which regions had the highest sales last month?
-- Show monthly trends by product category.
-- Which customers generated the most revenue?
-- Compare this month's metrics with last month.
-- What are the top performing products?
-
----
-
-
+- Which payment type has the highest average tip?
+- How does trip demand vary by hour?
+- Which pickup locations have the most trips?
+- Which routes have the highest average fare?
+- How does average tipping vary throughout the day?
 
 ## Future Improvements
 
-- User authentication
-- Query history
-- Role-based access
-- Scheduled reports
-- Dashboard sharing
-- AWS deployment
-- GitHub Actions CI/CD
-- Support for multiple databases
+- Automate and schedule recurring data ingestion
+- Add CI/CD with GitHub Actions
+- Deploy the application to AWS
+- Improve query validation and error handling
+- Add query history and saved reports
 
----
+## What I Learned
 
-## Lessons Learned
-
-This project was built to gain experience with:
-
-- ETL pipelines
-- Data modeling with dbt
-- SQL generation using LLMs
-- FastAPI
-- Docker
-- PostgreSQL
-- Backend API development
-- Analytics engineering
-
----
-
-## Screenshots
-
-*(Add screenshots after completing the UI.)*
+This project gave me practical experience with Snowflake, dbt, data ingestion, SQL modeling, and data quality testing. It also helped me connect a warehouse to a working application using FastAPI, an LLM, and Streamlit, and package the services with Docker Compose.
